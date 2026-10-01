@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISL — Informatika Smart Learning</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .active-tab-bg {
+            background-color: #eef2ff;
+            color: #4f46e5;
+            font-weight: 700;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+    <!-- TOP HEADER NAV -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer group" onclick="switchScreen('beranda')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-blue-500 flex items-center justify-center text-white shadow-md shadow-indigo-200 font-black text-xl group-hover:scale-105 transition-transform">
+                    ISL
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <h1 class="font-black text-slate-900 text-lg leading-tight tracking-tight">ISL</h1>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full">SMP Fase D</span>
+                    </div>
+                    <p class="text-xs text-indigo-600 font-medium">Informatika Smart Learning</p>
+                </div>
+            </div>
+
+            <!-- DESKTOP NAVIGATION -->
+            <nav class="hidden md:flex items-center space-x-1 text-xs font-semibold">
+                <button onclick="switchScreen('beranda')" id="desk-nav-beranda" class="px-3.5 py-2 rounded-xl transition-all active-tab-bg flex items-center gap-1.5">
+                    <i class="fa-solid fa-house"></i> Beranda
+                </button>
+                <button onclick="switchScreen('materi')" id="desk-nav-materi" class="px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-indigo-600 hover:bg-slate-50 flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-open"></i> Materi
+                </button>
+                <button onclick="switchScreen('kuis')" id="desk-nav-kuis" class="px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-indigo-600 hover:bg-slate-50 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-to-square"></i> Kuis
+                </button>
+                <button onclick="switchScreen('game')" id="desk-nav-game" class="px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-indigo-600 hover:bg-slate-50 flex items-center gap-1.5">
+                    <i class="fa-solid fa-gamepad"></i> Game Logika
+                </button>
+                <button onclick="switchScreen('profil')" id="desk-nav-profil" class="px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-indigo-600 hover:bg-slate-50 flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-gear"></i> Profil
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN APPLICATION CONTAINER -->
+    <main class="max-w-5xl w-full mx-auto p-4 flex-grow mb-16 md:mb-6 space-y-6">
+
+        <!-- ==================== 1. BERANDA SCREEN ==================== -->
+        <section id="screen-beranda" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-10 top-6 text-white/10 text-9xl font-black pointer-events-none select-none">CT</div>
+                
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-white/20 backdrop-blur-md text-xs font-semibold rounded-full text-indigo-100 border border-white/20">
+                            <i class="fa-solid fa-graduation-cap"></i> SMP Kelas 7, 8, 9 (Fase D)
+                        </span>
+                        <span class="inline-flex items-center gap-1 px-3 py-1 bg-amber-400/30 backdrop-blur-md text-xs font-bold rounded-full text-amber-200 border border-amber-300/30">
+                            <i class="fa-solid fa-star"></i> Kurikulum Merdeka
+                        </span>
+                    </div>
+
+                    <h2 class="text-2xl sm:text-4xl font-black leading-tight tracking-tight">
+                        Informatika Smart Learning
+                    </h2>
+                    <p class="text-indigo-100 text-sm sm:text-base leading-relaxed font-normal">
+                        “Belajar Informatika Jadi Lebih Interaktif” — Kuasai 4 pilar <strong class="text-white">Berpikir Komputasional (BK)</strong> & <strong class="text-white">Algoritma</strong> dengan penjelasan visual, simulator interaktif, kuis teruji, dan tantangan logika.
+                    </p>
+
+                    <!-- Author Info Badge inside Hero -->
+                    <div class="pt-1 flex items-center space-x-3 text-xs bg-indigo-900/40 backdrop-blur-md p-2.5 rounded-2xl border border-white/10 w-fit">
+                        <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </div>
+                        <div>
+                            <p class="text-slate-300 text-[10px] uppercase font-semibold">Penyusun Aplikasi</p>
+                            <p class="font-bold text-white text-xs">Wahyu Sudrajad <span class="text-indigo-200 font-normal">| SMP Kartikatama Metro</span></p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchScreen('materi')" class="bg-white text-indigo-700 hover:bg-indigo-50 font-bold px-5 py-3 rounded-xl shadow-lg transition-all text-sm flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-book-open text-indigo-600"></i> Pelajari Materi (CP & TP)
+                        </button>
+                        <button onclick="switchScreen('kuis')" class="bg-indigo-800/80 hover:bg-indigo-900 text-white font-semibold px-5 py-3 rounded-xl border border-indigo-400/30 transition-all text-sm flex items-center gap-2 active:scale-95">
+                            <i class="fa-solid fa-pen-to-square"></i> Mulai Kuis (10 Soal)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Overview Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 font-semibold uppercase">Materi Pilar</p>
+                        <p class="text-base font-extrabold text-slate-900">4 Topik Utama</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 font-semibold uppercase">Soal Kuis</p>
+                        <p class="text-base font-extrabold text-slate-900">10 Soal BK</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 font-semibold uppercase">Skor Kuis</p>
+                        <p class="text-base font-extrabold text-indigo-600" id="home-quiz-score">-</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 font-semibold uppercase">Skor Game</p>
+                        <p class="text-base font-extrabold text-emerald-600" id="home-game-score">0 Pts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ringkasan CP & TP Informatika Card -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-scroll"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-slate-900 text-base">Capaian & Tujuan Pembelajaran (CP & TP)</h3>
+                            <p class="text-xs text-slate-500">Informatika SMP Kurikulum Merdeka (Fase D)</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Fase D (SMP)</span>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 space-y-2">
+                    <span class="text-xs font-bold text-indigo-700 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-bullseye"></i> Capaian Pembelajaran (CP) Elemen Berpikir Komputasional:
+                    </span>
+                    <p class="text-xs text-slate-700 leading-relaxed italic">
+                        “Pada akhir fase D, peserta didik mampu menerapkan berpikir komputasional untuk menghasilkan beberapa solusi dalam menyelesaikan persoalan dengan data diskrit bervolume kecil dan mendisposisikan berpikir komputasional dalam bidang lain terutama dalam literasi, numerasi, dan literasi sains.”
+                    </p>
+                </div>
+
+                <!-- 4 TP Summary Badges -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+                        <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">1</span>
+                        <div>
+                            <strong class="text-indigo-900 block font-bold">TP-1: Dekomposisi</strong>
+                            <span class="text-slate-600">Memecah persoalan kompleks menjadi sub-masalah kecil yang mandiri.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+                        <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">2</span>
+                        <div>
+                            <strong class="text-indigo-900 block font-bold">TP-2: Pengenalan Pola</strong>
+                            <span class="text-slate-600">Mengenali kesamaan atau tren dari masalah terdahulu untuk solusi efisien.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+                        <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">3</span>
+                        <div>
+                            <strong class="text-indigo-900 block font-bold">TP-3: Abstraksi</strong>
+                            <span class="text-slate-600">Menyaring detail tak penting dan fokus pada esensi informasi utama.</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+                        <span class="w-5 h-5 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center text-[10px] shrink-0 mt-0.5">4</span>
+                        <div>
+                            <strong class="text-indigo-900 block font-bold">TP-4: Algoritma</strong>
+                            <span class="text-slate-600">Menyusun langkah-langkah logis dan terstruktur secara berurutan.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Menu -->
+            <div class="space-y-3">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-compass text-indigo-600"></i> Menu Utama Aplikasi
+                </h3>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div onclick="switchScreen('materi')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors flex items-center justify-center text-xl shrink-0 shadow-sm">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">MODUL MATERI</h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Pelajari 4 pilar BK lengkap dengan penjelasan interaktif & simulator visual.</p>
+                        </div>
+                    </div>
+
+                    <div onclick="switchScreen('kuis')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors flex items-center justify-center text-xl shrink-0 shadow-sm">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">KUIS INTERAKTIF</h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Uji pemahamanmu secara langsung melalui 10 soal pilihan ganda standar SMP.</p>
+                        </div>
+                    </div>
+
+                    <div onclick="switchScreen('game')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors flex items-center justify-center text-xl shrink-0 shadow-sm">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">GAME LOGIKA</h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Asah logika berpikir komputasional dengan menyusun urutan langkah algoritma.</p>
+                        </div>
+                    </div>
+
+                    <div onclick="switchScreen('profil')" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group flex items-start space-x-4">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors flex items-center justify-center text-xl shrink-0 shadow-sm">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">PROFIL & PENYUSUN</h4>
+                                <i class="fa-solid fa-chevron-right text-xs text-slate-400 group-hover:translate-x-1 transition-transform"></i>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-1">Informasi lengkap penyusun (Wahyu Sudrajad - SMP Kartikatama Metro) & dokumen CP/TP.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 2. MATERI SCREEN ==================== -->
+        <section id="screen-materi" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="text-2xl font-black text-slate-900">Materi Pembelajaran</h2>
+                            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2.5 py-0.5 rounded-full">4 Pilar BK</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5">Pilih salah satu pilar di bawah untuk melihat penjelasan detail, contoh, dan simulator interaktif.</p>
+                    </div>
+                    <div class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl self-start sm:self-auto border border-slate-200">
+                        <i class="fa-solid fa-bookmark text-indigo-600 mr-1"></i> Informatika SMP
+                    </div>
+                </div>
+
+                <!-- 4 Topic Navigation Tabs -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <button onclick="selectMaterial('Dekomposisi')" id="tab-Dekomposisi" class="p-3 rounded-xl border border-indigo-600 bg-indigo-50 font-bold text-indigo-700 text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-scissors"></i> Dekomposisi
+                    </button>
+                    <button onclick="selectMaterial('Pengenalan Pola')" id="tab-Pengenalan Pola" class="p-3 rounded-xl border border-slate-200 bg-slate-50 font-medium text-slate-600 text-xs sm:text-sm transition-all hover:bg-indigo-50/50 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-shapes"></i> Pengenalan Pola
+                    </button>
+                    <button onclick="selectMaterial('Abstraksi')" id="tab-Abstraksi" class="p-3 rounded-xl border border-slate-200 bg-slate-50 font-medium text-slate-600 text-xs sm:text-sm transition-all hover:bg-indigo-50/50 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-eye-slash"></i> Abstraksi
+                    </button>
+                    <button onclick="selectMaterial('Algoritma')" id="tab-Algoritma" class="p-3 rounded-xl border border-slate-200 bg-slate-50 font-medium text-slate-600 text-xs sm:text-sm transition-all hover:bg-indigo-50/50 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-diagram-project"></i> Algoritma
+                    </button>
+                </div>
+
+                <!-- SINGLE MATERIAL DETAIL AREA -->
+                <div class="bg-slate-50/80 rounded-2xl p-5 sm:p-7 border border-slate-200 space-y-6">
+                    <!-- Title & TP Alignment -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+                        <div class="flex items-center space-x-3">
+                            <div id="materi-icon-bg" class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl shadow-md">
+                                <i id="materi-icon" class="fa-solid fa-scissors"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs uppercase tracking-wider font-bold text-indigo-600" id="materi-subtitle">Pilar 1 Berpikir Komputasional</span>
+                                <h3 id="materi-title" class="text-2xl font-black text-slate-900">Dekomposisi</h3>
+                            </div>
+                        </div>
+
+                        <div id="materi-tp-badge" class="bg-indigo-100 border border-indigo-200 text-indigo-800 text-xs px-3 py-1.5 rounded-xl font-bold w-fit">
+                            Tujuan Pembelajaran: TP-1
+                        </div>
+                    </div>
+
+                    <!-- Explanation -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-indigo-600"></i> Penjelasan Konsep:
+                        </h4>
+                        <p id="materi-explanation" class="text-sm text-slate-700 leading-relaxed bg-white p-4 rounded-xl border border-slate-200 shadow-xs">
+                            Dekomposisi adalah proses memecah masalah besar atau kompleks menjadi sub-masalah yang lebih kecil, sederhana, dan lebih mudah dikelola satu per satu.
+                        </p>
+                    </div>
+
+                    <!-- Example -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i> Contoh Penerapan Nyata:
+                        </h4>
+                        <p id="materi-example" class="text-sm text-slate-700 leading-relaxed bg-amber-50/80 border border-amber-200/80 p-4 rounded-xl">
+                            Saat panitia sekolah merencanakan Acara Peringatan Hari Kemerdekaan, tugas dipecah menjadi: 1) Seksi Lomba, 2) Seksi Konsumsi, 3) Seksi Perlengkapan, dan 4) Seksi Dokumentasi.
+                        </p>
+                    </div>
+
+                    <!-- Key Points -->
+                    <div class="space-y-2">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-key text-emerald-600"></i> Poin-Poin Penting:
+                        </h4>
+                        <ul id="materi-keypoints" class="list-disc list-inside text-sm text-slate-700 space-y-1.5 bg-white p-4 rounded-xl border border-slate-200">
+                            <li>Membuat masalah rumit menjadi lebih terkontrol dan tidak membuat kewalahan.</li>
+                            <li>Memudahkan pembagian tugas secara adil dalam tim (kolaborasi).</li>
+                            <li>Membantu menemukan akar permasalahan dengan lebih presisi.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Micro Visualizer / Demo -->
+                    <div class="bg-white p-5 rounded-2xl border border-indigo-100 shadow-xs space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-slate-900 text-xs sm:text-sm uppercase tracking-wide flex items-center gap-2 text-indigo-700">
+                                <i class="fa-solid fa-flask"></i> Simulator Interaktif Konsep
+                            </h4>
+                            <span class="text-[11px] font-semibold text-slate-400">Uji Coba Langsung</span>
+                        </div>
+
+                        <div id="materi-simulator-area" class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs space-y-3">
+                            <!-- Populated dynamically by JS according to topic -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. KUIS SCREEN ==================== -->
+        <section id="screen-kuis" class="hidden space-y-6">
+            <!-- QUESTION INTERFACE CONTAINER -->
+            <div id="quiz-question-container" class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <!-- Header / Counter / Progress -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen-nib"></i> Evaluasi Berpikir Komputasional
+                        </span>
+                        <h2 class="text-2xl font-black text-slate-900" id="quiz-progress-text">Soal 1 dari 10</h2>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <div class="w-36 bg-slate-100 h-3 rounded-full overflow-hidden border border-slate-200">
+                            <div id="quiz-progress-bar" class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-full w-1/10 transition-all duration-300"></div>
+                        </div>
+                        <span class="text-xs font-bold text-slate-500 min-w-[3rem]" id="quiz-percent-text">10%</span>
+                    </div>
+                </div>
+
+                <!-- Question Text Label -->
+                <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-xs">
+                    <p id="question-label" class="text-base sm:text-lg font-bold text-slate-800 leading-relaxed">
+                        Pertanyaan kuis sedang dimuat...
+                    </p>
+                </div>
+
+                <!-- 4 Answer Choices Buttons -->
+                <div class="grid grid-cols-1 gap-3" id="answer-choices-group">
+                    <button onclick="selectQuizAnswer(0)" id="choice-btn-0" class="w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]">
+                        <span id="choice-text-0" class="pr-2">Pilihan A</span>
+                        <div class="w-6 h-6 rounded-full border border-slate-300 group-hover:border-indigo-500 flex items-center justify-center shrink-0">
+                            <div class="w-3 h-3 rounded-full bg-indigo-600 hidden choice-dot"></div>
+                        </div>
+                    </button>
+
+                    <button onclick="selectQuizAnswer(1)" id="choice-btn-1" class="w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]">
+                        <span id="choice-text-1" class="pr-2">Pilihan B</span>
+                        <div class="w-6 h-6 rounded-full border border-slate-300 group-hover:border-indigo-500 flex items-center justify-center shrink-0">
+                            <div class="w-3 h-3 rounded-full bg-indigo-600 hidden choice-dot"></div>
+                        </div>
+                    </button>
+
+                    <button onclick="selectQuizAnswer(2)" id="choice-btn-2" class="w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]">
+                        <span id="choice-text-2" class="pr-2">Pilihan C</span>
+                        <div class="w-6 h-6 rounded-full border border-slate-300 group-hover:border-indigo-500 flex items-center justify-center shrink-0">
+                            <div class="w-3 h-3 rounded-full bg-indigo-600 hidden choice-dot"></div>
+                        </div>
+                    </button>
+
+                    <button onclick="selectQuizAnswer(3)" id="choice-btn-3" class="w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]">
+                        <span id="choice-text-3" class="pr-2">Pilihan D</span>
+                        <div class="w-6 h-6 rounded-full border border-slate-300 group-hover:border-indigo-500 flex items-center justify-center shrink-0">
+                            <div class="w-3 h-3 rounded-full bg-indigo-600 hidden choice-dot"></div>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Feedback Area Label -->
+                <div id="feedback-area" class="hidden p-4 sm:p-5 rounded-2xl border transition-all space-y-1.5">
+                    <p id="feedback-label" class="font-extrabold text-sm"></p>
+                    <p id="explanation-label" class="text-xs leading-relaxed text-slate-600"></p>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+                    <span class="text-xs font-semibold text-slate-400" id="quiz-question-hint">Pilih 1 jawaban lalu klik "Jawab"</span>
+
+                    <div class="flex items-center space-x-2">
+                        <button id="btn-jawab" onclick="submitQuizAnswer()" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-check"></i> Jawab
+                        </button>
+                        <button id="btn-next" onclick="nextQuizQuestion()" disabled class="bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition-all text-sm flex items-center gap-2">
+                            Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT INTERFACE CONTAINER (Hidden by default, stays on same screen) -->
+            <div id="quiz-result-container" class="hidden bg-white p-6 sm:p-10 rounded-3xl border border-slate-200 shadow-xl space-y-6 text-center">
+                <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white flex items-center justify-center text-5xl shadow-xl shadow-indigo-100">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black text-slate-900" id="result-title">KUIS SELESAI!</h2>
+                    <p id="result-message-label" class="text-sm font-bold text-indigo-700 px-5 py-2.5 bg-indigo-50 border border-indigo-100 rounded-2xl inline-block max-w-md">
+                        Pesan motivasi akan muncul di sini.
+                    </p>
+                </div>
+
+                <!-- Dynamic Score Grid Display -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-left pt-2">
+                    <div class="bg-indigo-50/70 p-4 rounded-2xl border border-indigo-200/80">
+                        <p class="text-xs text-indigo-700 font-bold uppercase tracking-wider">Nilai Akhir</p>
+                        <p id="score-label" class="text-2xl sm:text-3xl font-black text-indigo-700 mt-1">Nilai: 0</p>
+                    </div>
+
+                    <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200/80">
+                        <p class="text-xs text-emerald-700 font-bold uppercase tracking-wider">Jawaban Benar</p>
+                        <p id="correct-answer-label" class="text-xl sm:text-2xl font-black text-emerald-700 mt-1">Jawaban Benar: 0</p>
+                    </div>
+
+                    <div class="bg-rose-50/70 p-4 rounded-2xl border border-rose-200/80">
+                        <p class="text-xs text-rose-700 font-bold uppercase tracking-wider">Jawaban Salah</p>
+                        <p id="incorrect-answer-label" class="text-xl sm:text-2xl font-black text-rose-700 mt-1">Jawaban Salah: 0</p>
+                    </div>
+
+                    <div class="bg-blue-50/70 p-4 rounded-2xl border border-blue-200/80">
+                        <p class="text-xs text-blue-700 font-bold uppercase tracking-wider">Persentase</p>
+                        <p id="percentage-label" class="text-2xl sm:text-3xl font-black text-blue-700 mt-1">Persentase: 0%</p>
+                    </div>
+                </div>
+
+                <!-- Result Actions -->
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-6 border-t border-slate-100">
+                    <button onclick="resetQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all text-sm flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-rotate-right"></i> Coba Lagi
+                    </button>
+                    <button onclick="switchScreen('beranda')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-7 py-3.5 rounded-xl transition-all text-sm flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-house"></i> Beranda
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 4. GAME LOGIKA SCREEN ==================== -->
+        <section id="screen-game" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <!-- Header -->
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-widest flex items-center gap-1">
+                            <i class="fa-solid fa-puzzle-piece"></i> Simulasi Langkah Algoritma
+                        </span>
+                        <h2 class="text-2xl font-black text-slate-900">Game Logika</h2>
+                    </div>
+                    <div class="bg-amber-50 border border-amber-200 text-amber-900 font-black px-4 py-2 rounded-2xl flex items-center space-x-2 text-sm shadow-xs">
+                        <i class="fa-solid fa-star text-amber-500 text-base"></i>
+                        <span id="game-score-display">Skor: 0</span>
+                    </div>
+                </div>
+
+                <!-- Challenge Header -->
+                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-xs text-slate-500 font-bold">
+                        <span id="game-challenge-num" class="text-indigo-600 uppercase tracking-wider">Tantangan 1 dari 3</span>
+                        <span class="bg-white px-2.5 py-1 rounded-lg border border-slate-200">Gunakan panah untuk mengubah urutan</span>
+                    </div>
+                    <h3 id="game-challenge-title" class="text-lg font-black text-slate-800">
+                        "Susun langkah membuat teh manis."
+                    </h3>
+                    <p class="text-xs text-slate-600">
+                        Urutkan langkah-langkah acak di bawah ini menjadi algoritma yang logis, tepat, dan terstruktur!
+                    </p>
+                </div>
+
+                <!-- Reorderable Items Container -->
+                <div id="game-steps-container" class="space-y-2.5 py-1">
+                    <!-- Dynamic rendering by JS -->
+                </div>
+
+                <!-- Feedback Display -->
+                <div id="game-feedback" class="hidden p-5 rounded-2xl border transition-all text-sm font-semibold space-y-2"></div>
+
+                <!-- Action Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                    <button onclick="resetGameChallenge()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl transition-all text-xs flex items-center gap-2">
+                        <i class="fa-solid fa-arrows-rotate"></i> Reset Urutan
+                    </button>
+
+                    <div class="flex items-center space-x-2">
+                        <button id="btn-game-check" onclick="checkGameAnswer()" class="bg-amber-500 hover:bg-amber-600 active:scale-95 text-white font-bold px-6 py-2.5 rounded-xl shadow-md transition-all text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-check-double"></i> Periksa Jawaban
+                        </button>
+                        <button id="btn-game-next" onclick="nextGameChallenge()" class="hidden bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold px-6 py-2.5 rounded-xl shadow-md transition-all text-sm flex items-center gap-2">
+                            Tantangan Berikutnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 5. PROFIL SCREEN ==================== -->
+        <section id="screen-profil" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <!-- App Title Branding -->
+                <div class="flex items-center space-x-4 border-b border-slate-100 pb-6">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-blue-500 flex items-center justify-center text-white font-black text-2xl shadow-lg shadow-indigo-100 shrink-0">
+                        ISL
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="text-2xl font-black text-slate-900">ISL</h2>
+                            <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-2.5 py-0.5 rounded-full">v2.0</span>
+                        </div>
+                        <p class="text-indigo-600 font-bold text-sm">Informatika Smart Learning</p>
+                        <p class="text-xs text-slate-500">“Belajar Informatika Jadi Lebih Interaktif”</p>
+                    </div>
+                </div>
+
+                <!-- Author Profile Card -->
+                <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-md space-y-3 relative overflow-hidden">
+                    <div class="absolute right-4 -bottom-6 text-white/5 text-8xl font-black pointer-events-none select-none">AUTHOR</div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 px-3 py-1 rounded-full">Identitas Penyusun Aplikasi</span>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                        <div class="space-y-1">
+                            <span class="text-xs text-indigo-300 font-medium">Nama Pembuat / Penyusun:</span>
+                            <h4 class="text-xl font-black text-white">Wahyu Sudrajad</h4>
+                            <p class="text-xs text-indigo-200">Pengembang Media Pembelajaran Informatika</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <span class="text-xs text-indigo-300 font-medium">Asal Sekolah / Instansi:</span>
+                            <h4 class="text-lg font-bold text-amber-300">SMP Kartikatama Metro</h4>
+                            <p class="text-xs text-indigo-200">Kota Metro, Lampung</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Description -->
+                <div class="space-y-2">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-indigo-600"></i> Tentang Aplikasi:
+                    </h3>
+                    <p class="text-sm text-slate-700 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+                        “ISL adalah aplikasi pembelajaran interaktif yang dirancang khusus untuk membantu siswa SMP kelas 7–9 memahami Informatika (Berpikir Komputasional & Algoritma) melalui materi terstruktur, kuis teruji, dan tantangan logika.”
+                    </p>
+                </div>
+
+                <!-- Detailed Curriculum Matrix (CP & TP) -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-file-contract text-indigo-600"></i> Capaian & Tujuan Pembelajaran (CP & TP):
+                    </h3>
+
+                    <div class="space-y-2 text-xs">
+                        <div class="bg-indigo-50/70 p-4 rounded-xl border border-indigo-100 space-y-1">
+                            <strong class="text-indigo-900 font-bold block text-sm">Capaian Pembelajaran (CP) Fase D:</strong>
+                            <p class="text-slate-700 leading-relaxed">
+                                Peserta didik mampu menerapkan berpikir komputasional untuk menghasilkan beberapa solusi dalam menyelesaikan persoalan dengan data diskrit bervolume kecil dan mendisposisikan berpikir komputasional dalam bidang lain.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-0.5">
+                                <strong class="text-indigo-700 font-bold block">TP 1: Dekomposisi</strong>
+                                <p class="text-slate-600">Menguraikan masalah kompleks menjadi sub-bagian terkecil agar mudah dikelola.</p>
+                            </div>
+
+                            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-0.5">
+                                <strong class="text-indigo-700 font-bold block">TP 2: Pengenalan Pola</strong>
+                                <p class="text-slate-600">Mendeteksi kesamaan visual/data dari kasus terdahulu untuk menemukan solusi.</p>
+                            </div>
+
+                            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-0.5">
+                                <strong class="text-indigo-700 font-bold block">TP 3: Abstraksi</strong>
+                                <p class="text-slate-600">Menyaring informasi sekunder dan berfokus pada informasi penting saja.</p>
+                            </div>
+
+                            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-0.5">
+                                <strong class="text-indigo-700 font-bold block">TP 4: Algoritma</strong>
+                                <p class="text-slate-600">Menyusun instruksi berurutan yang logis dan jelas hingga mencapai akhir.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Grid Metadata -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Target Siswa</span>
+                        <p class="font-bold text-slate-800 mt-0.5">SMP Kelas 7–9</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Mata Pelajaran</span>
+                        <p class="font-bold text-slate-800 mt-0.5">Informatika</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Elemen Utama</span>
+                        <p class="font-bold text-slate-800 mt-0.5">Berpikir Komputasional</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+                        <span class="text-[10px] text-slate-400 font-bold uppercase">Status</span>
+                        <p class="font-bold text-emerald-600 mt-0.5"><i class="fa-solid fa-circle-check"></i> Aktif & Valid</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOBILE BOTTOM NAVIGATION BAR -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 z-50 shadow-lg">
+        <div class="grid grid-cols-5 gap-1 text-center">
+            <button onclick="switchScreen('beranda')" id="mob-nav-beranda" class="py-1 flex flex-col items-center text-xs font-bold active-tab-bg rounded-xl">
+                <i class="fa-solid fa-house text-base mb-0.5"></i>
+                <span class="text-[10px]">Beranda</span>
+            </button>
+            <button onclick="switchScreen('materi')" id="mob-nav-materi" class="py-1 flex flex-col items-center text-xs font-medium text-slate-500 rounded-xl">
+                <i class="fa-solid fa-book-open text-base mb-0.5"></i>
+                <span class="text-[10px]">Materi</span>
+            </button>
+            <button onclick="switchScreen('kuis')" id="mob-nav-kuis" class="py-1 flex flex-col items-center text-xs font-medium text-slate-500 rounded-xl">
+                <i class="fa-solid fa-pen-to-square text-base mb-0.5"></i>
+                <span class="text-[10px]">Kuis</span>
+            </button>
+            <button onclick="switchScreen('game')" id="mob-nav-game" class="py-1 flex flex-col items-center text-xs font-medium text-slate-500 rounded-xl">
+                <i class="fa-solid fa-gamepad text-base mb-0.5"></i>
+                <span class="text-[10px]">Game</span>
+            </button>
+            <button onclick="switchScreen('profil')" id="mob-nav-profil" class="py-1 flex flex-col items-center text-xs font-medium text-slate-500 rounded-xl">
+                <i class="fa-solid fa-user-gear text-base mb-0.5"></i>
+                <span class="text-[10px]">Profil</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- SCRIPT APPLICATION LOGIC -->
+    <script>
+        /* ==================== GLOBAL APPLICATION STATE ==================== */
+        let currentScreen = 'beranda';
+
+        /* 1. QUIZ MANDATORY VARIABLES */
+        let currentQuestion = 1;
+        let score = 0;
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        let answerSelected = false;
+        let selectedAnswer = null; // Stores index 0-3
+        let isSubmitted = false;
+
+        /* 2. MATERIAL STATE */
+        let currentMaterial = 'Dekomposisi';
+
+        /* 3. GAME LOGIKA MANDATORY VARIABLES */
+        let gameScore = 0;
+        let currentChallenge = 1;
+        let userSteps = [];
+
+        /* ==================== QUIZ DATA (10 QUESTIONS) ==================== */
+        const quizQuestions = [
+            {
+                text: "Proses memecah masalah utama yang kompleks menjadi sub-masalah kecil yang lebih sederhana dan mudah dikelola disebut...",
+                options: ["Pengenalan Pola", "Dekomposisi", "Abstraksi", "Algoritma"],
+                correct: 1,
+                explanation: "Dekomposisi berarti memecah masalah besar menjadi bagian-bagian kecil agar dapat diselesaikan secara sistematis satu per satu."
+            },
+            {
+                text: "Kemampuan untuk menemukan kesamaan atau tren karakteristik dari beberapa permasalahan yang pernah dihadapi dinamakan...",
+                options: ["Dekomposisi", "Abstraksi", "Pengenalan Pola", "Pemrograman"],
+                correct: 2,
+                explanation: "Pengenalan Pola (Pattern Recognition) membantu kita menemukan kemiripan solusi berdasarkan pengalaman permasalahan terdahulu."
+            },
+            {
+                text: "Proses mengeliminasi detail-detail sekunder yang tidak penting dan fokus hanya pada informasi utama disebut...",
+                options: ["Abstraksi", "Algoritma", "Dekomposisi", "Pengkodean"],
+                correct: 0,
+                explanation: "Abstraksi menyaring dan mengabaikan detail irrelevant agar perhatian penuh tertuju pada informasi krusial."
+            },
+            {
+                text: "Urutan langkah-langkah logis, berurutan, dan terstruktur secara pasti untuk menyelesaikan suatu masalah disebut...",
+                options: ["Abstraksi", "Dekomposisi", "Algoritma", "Desain Grafis"],
+                correct: 2,
+                explanation: "Algoritma adalah deretan instruksi terurut yang diikuti secara konsisten dari awal sampai menghasilkan keluaran."
+            },
+            {
+                text: "Manakah contoh penerapan Dekomposisi saat merencanakan acara Pentas Seni sekolah?",
+                options: [
+                    "Membagi tugas panitia ke Seksi Acara, Konsumsi, Dekorasi, dan Logistik",
+                    "Membuat poster brosur acara dengan warna menarik",
+                    "Menentukan harga tiket masuk untuk penonton umum",
+                    "Mengabaikan jenis pakaian penonton yang hadir"
+                ],
+                correct: 0,
+                explanation: "Membagi kepanitiaan menjadi divisi-divisi kecil adalah bentuk nyata memecah proyek besar menjadi tugas terkontrol."
+            },
+            {
+                text: "Peta jaringan rute stasiun MRT hanya menampilkan garis jalur dan nama stasiun tanpa gambar gedung/jalan raya. Hal ini menerapkan...",
+                options: ["Pengenalan Pola", "Algoritma", "Abstraksi", "Dekomposisi"],
+                correct: 2,
+                explanation: "Menghilangkan detail peta fisik bumi agar pengguna MRT fokus pada urutan stasiun adalah penerapan prinsip Abstraksi."
+            },
+            {
+                text: "Ibu mengenali bahwa setiap kali memasak rendang daging selalu membutuhkan waktu kisaran 2 jam. Hal ini merupakan pilar...",
+                options: ["Pengenalan Pola", "Dekomposisi", "Pengujian", "Abstraksi"],
+                correct: 0,
+                explanation: "Mengenali kebiasaan berulang dan estimasi durasi berulang merupakan pilar Pengenalan Pola."
+            },
+            {
+                text: "Petunjuk urutan langkah dalam resep masakan dari memasukkan bahan hingga penyajian merupakan contoh dari...",
+                options: ["Abstraksi", "Algoritma", "Dekomposisi", "Pola"],
+                correct: 1,
+                explanation: "Resep masakan berisi urutan langkah kerja terstruktur yang wajib diikuti runtut dari awal sampai akhir."
+            },
+            {
+                text: "Syarat utama dari sebuah Algoritma yang baik dan valid adalah...",
+                options: [
+                    "Sangat panjang dan dibuat rumit",
+                    "Hanya ditulis dalam bahasa pemrograman C++",
+                    "Jelas, tidak ambigu, dan memiliki titik henti (terbatas)",
+                    "Hanya bisa dibaca oleh mesin komputer"
+                ],
+                correct: 2,
+                explanation: "Algoritma harus bernilai pasti, berurutan, terdefinisi tanpa ambigu, serta memiliki batas akhir eksekusi."
+            },
+            {
+                text: "Kombinasi dari Dekomposisi, Pengenalan Pola, Abstraksi, dan Algoritma secara keseluruhan membentuk kemampuan...",
+                options: [
+                    "Berpikir Komputasional (Computational Thinking)",
+                    "Teknik Otomotif Mesin",
+                    "Sistem Otomasi Robotik",
+                    "Manajemen Waktu Belajar"
+                ],
+                correct: 0,
+                explanation: "Keempat pilar tersebut merupakan fondasi utama dari kemampuan Berpikir Komputasional (BK) Informatika."
+            }
+        ];
+
+        /* ==================== MATERIAL DATA ==================== */
+        const materialData = {
+            'Dekomposisi': {
+                title: "Dekomposisi",
+                subtitle: "Pilar 1 Berpikir Komputasional",
+                tp: "Tujuan Pembelajaran: TP-1",
+                icon: "fa-scissors",
+                explanation: "Dekomposisi adalah proses memecah masalah besar atau kompleks menjadi sub-masalah yang lebih kecil, sederhana, dan lebih mudah dikelola satu per satu.",
+                example: "Saat panitia sekolah hendak mengadakan Acara Peringatan Hari Kemerdekaan, tugas dipecah menjadi: 1) Seksi Lomba, 2) Seksi Konsumsi, 3) Seksi Perlengkapan, dan 4) Seksi Dokumentasi.",
+                keypoints: [
+                    "Membuat masalah rumit menjadi lebih terstruktur dan terukur.",
+                    "Memudahkan pembagian tugas secara efektif dalam kelompok.",
+                    "Memungkinkan penyelesaian paralel atau bertahap."
+                ]
+            },
+            'Pengenalan Pola': {
+                title: "Pengenalan Pola",
+                subtitle: "Pilar 2 Berpikir Komputasional",
+                tp: "Tujuan Pembelajaran: TP-2",
+                icon: "fa-shapes",
+                explanation: "Pengenalan Pola adalah kemampuan untuk menemukan kesamaan, tren, atau keteraturan dalam masalah-masalah yang pernah diselesaikan sebelumnya.",
+                example: "Mengenali bahwa setiap kali langit mendung gelap dan angin bertiup kencang, kemungkinan besar hujan turun, sehingga kita otomatis membawa payung sebelum berangkat.",
+                keypoints: [
+                    "Menggunakan pengalaman masa lalu untuk prediksi masa depan.",
+                    "Menemukan pola berulang dalam data atau perilaku.",
+                    "Mempercepat proses pencarian solusi yang efisien."
+                ]
+            },
+            'Abstraksi': {
+                title: "Abstraksi",
+                subtitle: "Pilar 3 Berpikir Komputasional",
+                tp: "Tujuan Pembelajaran: TP-3",
+                icon: "fa-eye-slash",
+                explanation: "Abstraksi adalah proses menyaring dan mengabaikan detail-detail yang tidak penting, sehingga perhatian berfokus penuh pada informasi yang relevan.",
+                example: "Peta jalur Busway TransJakarta atau MRT hanya menampilkan titik stasiun dan garis warna rute tanpa menggambar posisi rumah, pohon, atau toko di pinggir jalan.",
+                keypoints: [
+                    "Menghilangkan detail sekunder yang membingungkan.",
+                    "Menyoroti inti informasi utama yang benar-benar dibutuhkan.",
+                    "Menyederhanakan model sistem yang rumit."
+                ]
+            },
+            'Algoritma': {
+                title: "Algoritma",
+                subtitle: "Pilar 4 Berpikir Komputasional",
+                tp: "Tujuan Pembelajaran: TP-4",
+                icon: "fa-diagram-project",
+                explanation: "Algoritma adalah susunan langkah-langkah logis, berurutan, dan terstruktur secara pasti untuk menyelesaikan suatu masalah atau mencapai tujuan tertentu.",
+                example: "Resep membuat Mi Instan: Rebus air -> Masukkan mi -> Tuang bumbu di mangkuk -> Tiriskan mi -> Aduk rata hingga siap disajikan.",
+                keypoints: [
+                    "Harus bersifat logis dan tidak membingungkan (jelas).",
+                    "Memiliki langkah awal (input) dan batas akhir (output) yang pasti.",
+                    "Dapat dieksekusi secara berulang dengan hasil yang konsisten."
+                ]
+            }
+        };
+
+        /* ==================== GAME LOGIKA DATA ==================== */
+        const gameChallenges = [
+            {
+                title: "Susun langkah membuat teh manis hangat.",
+                steps: [
+                    "Siapkan cangkir, kantong teh, dan gula secukupnya",
+                    "Tuangkan air panas ke dalam cangkir",
+                    "Celupkan kantong teh hingga air berubah warna kecokelatan",
+                    "Tambahkan gula lalu aduk hingga larut sepenuhnya",
+                    "Teh manis hangat siap dinikmati"
+                ]
+            },
+            {
+                title: "Susun langkah menyalakan komputer / laptop dengan benar.",
+                steps: [
+                    "Pastikan kabel daya terhubung ke stopkontak listrik",
+                    "Tekan tombol Power pada CPU / Laptop",
+                    "Tunggu proses booting sistem operasi selesai",
+                    "Masukkan kata sandi (password) akun pengguna jika ada",
+                    "Komputer siap digunakan pada tampilan layar Desktop"
+                ]
+            },
+            {
+                title: "Susun langkah menghitung nilai rata-rata ujian siswa.",
+                steps: [
+                    "Kumpulkan seluruh lembar nilai ujian siswa",
+                    "Jumlahkan seluruh nilai ujian siswa menjadi total nilai",
+                    "Hitung total banyaknya siswa yang mengikuti ujian",
+                    "Bagi total nilai ujian dengan banyaknya jumlah siswa",
+                    "Catat hasil pembagian tersebut sebagai nilai rata-rata"
+                ]
+            }
+        ];
+
+        /* ==================== NAVIGATION LOGIC ==================== */
+        function switchScreen(screenName) {
+            currentScreen = screenName;
+            
+            // Hide all sections
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            
+            // Show target section
+            const target = document.getElementById(`screen-${screenName}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update Navigation Button Active States
+            ['beranda', 'materi', 'kuis', 'game', 'profil'].forEach(name => {
+                const deskBtn = document.getElementById(`desk-nav-${name}`);
+                const mobBtn = document.getElementById(`mob-nav-${name}`);
+                
+                if (deskBtn) {
+                    if (name === screenName) {
+                        deskBtn.className = "px-3.5 py-2 rounded-xl transition-all active-tab-bg flex items-center gap-1.5 font-bold";
+                    } else {
+                        deskBtn.className = "px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-indigo-600 hover:bg-slate-50 flex items-center gap-1.5 font-medium";
+                    }
+                }
+
+                if (mobBtn) {
+                    if (name === screenName) {
+                        mobBtn.className = "py-1 flex flex-col items-center text-xs font-bold active-tab-bg rounded-xl";
+                    } else {
+                        mobBtn.className = "py-1 flex flex-col items-center text-xs font-medium text-slate-500 rounded-xl";
+                    }
+                }
+            });
+
+            // Refresh specific screen contents if needed
+            if (screenName === 'kuis' && currentQuestion === 1 && score === 0 && !isSubmitted) {
+                loadQuizQuestion();
+            } else if (screenName === 'game') {
+                loadGameChallenge();
+            } else if (screenName === 'beranda') {
+                updateHomeStats();
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateHomeStats() {
+            document.getElementById('home-game-score').innerText = `${gameScore} Pts`;
+            if (currentQuestion === 10 && isSubmitted) {
+                document.getElementById('home-quiz-score').innerText = `${score} / 100`;
+            }
+        }
+
+        /* ==================== MATERI LOGIC & SIMULATORS ==================== */
+        function selectMaterial(topic) {
+            currentMaterial = topic;
+            const data = materialData[topic];
+            if (!data) return;
+
+            // Update Tabs UI
+            Object.keys(materialData).forEach(t => {
+                const tabBtn = document.getElementById(`tab-${t}`);
+                if (tabBtn) {
+                    if (t === topic) {
+                        tabBtn.className = "p-3 rounded-xl border border-indigo-600 bg-indigo-50 font-bold text-indigo-700 text-xs sm:text-sm transition-all flex items-center justify-center gap-2 shadow-sm";
+                    } else {
+                        tabBtn.className = "p-3 rounded-xl border border-slate-200 bg-slate-50 font-medium text-slate-600 text-xs sm:text-sm transition-all hover:bg-indigo-50/50 flex items-center justify-center gap-2";
+                    }
+                }
+            });
+
+            // Bind Material Fields
+            document.getElementById('materi-title').innerText = data.title;
+            document.getElementById('materi-subtitle').innerText = data.subtitle;
+            document.getElementById('materi-tp-badge').innerText = data.tp;
+            document.getElementById('materi-explanation').innerText = data.explanation;
+            document.getElementById('materi-example').innerText = data.example;
+            document.getElementById('materi-icon').className = `fa-solid ${data.icon}`;
+
+            // Key points list rendering
+            const pointsList = document.getElementById('materi-keypoints');
+            pointsList.innerHTML = '';
+            data.keypoints.forEach(pt => {
+                const li = document.createElement('li');
+                li.innerText = pt;
+                pointsList.appendChild(li);
+            });
+
+            // Load simulator dynamically for topic
+            loadMaterialSimulator(topic);
+        }
+
+        function loadMaterialSimulator(topic) {
+            const simArea = document.getElementById('materi-simulator-area');
+            if (topic === 'Dekomposisi') {
+                simArea.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-puzzle-piece text-indigo-600"></i> Cobalah memecah masalah: "Membuat Aplikasi ISL"</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-center shadow-2xs">
+                            <span class="block font-bold text-indigo-700">Sub 1</span>
+                            <span class="text-[11px] text-slate-600">Desain Tampilan UI</span>
+                        </div>
+                        <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-center shadow-2xs">
+                            <span class="block font-bold text-indigo-700">Sub 2</span>
+                            <span class="text-[11px] text-slate-600">Penyusunan Materi</span>
+                        </div>
+                        <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-center shadow-2xs">
+                            <span class="block font-bold text-indigo-700">Sub 3</span>
+                            <span class="text-[11px] text-slate-600">Pemrograman Kuis</span>
+                        </div>
+                        <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-center shadow-2xs">
+                            <span class="block font-bold text-indigo-700">Sub 4</span>
+                            <span class="text-[11px] text-slate-600">Pengujian Sistem</span>
+                        </div>
+                    </div>
+                `;
+            } else if (topic === 'Pengenalan Pola') {
+                simArea.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-chart-line text-indigo-600"></i> Perhatikan Pola Deret Angka Ini:</p>
+                    <div class="flex items-center space-x-2 text-sm font-bold text-indigo-900 justify-center bg-white p-3 rounded-lg border border-slate-200">
+                        <span class="px-2 py-1 bg-indigo-50 rounded">2</span>
+                        <span>➔</span>
+                        <span class="px-2 py-1 bg-indigo-50 rounded">4</span>
+                        <span>➔</span>
+                        <span class="px-2 py-1 bg-indigo-50 rounded">6</span>
+                        <span>➔</span>
+                        <span class="px-2 py-1 bg-indigo-50 rounded">8</span>
+                        <span>➔</span>
+                        <span class="px-2.5 py-1 bg-amber-100 text-amber-800 border border-amber-300 rounded font-black">? (10)</span>
+                    </div>
+                    <p class="text-[11px] text-slate-500 text-center">Polanya adalah bertambah +2 pada setiap suku berikutnya.</p>
+                `;
+            } else if (topic === 'Abstraksi') {
+                simArea.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-filter text-indigo-600"></i> Mode Tampilan Abstraksi Peta:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="p-3 bg-white rounded-lg border border-slate-200 text-slate-400 space-y-1">
+                            <span class="font-bold text-xs text-slate-600">Peta Detail Nyata (Rumit)</span>
+                            <p class="text-[10px]">Menampilkan pohon, bentuk genteng rumah, tiang listrik, kontur tanah, warna pagar...</p>
+                        </div>
+                        <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-200 text-indigo-900 space-y-1">
+                            <span class="font-bold text-xs text-indigo-700">Hasil Abstraksi Peta Navigasi</span>
+                            <p class="text-[10px] font-medium">Hanya menampilkan: Nama Jalan, Titik Lokasi, dan Jalur Rute Tercepat.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (topic === 'Algoritma') {
+                simArea.innerHTML = `
+                    <p class="font-bold text-slate-800 mb-2"><i class="fa-solid fa-list-ol text-indigo-600"></i> Alur Algoritma Sederhana (Menyalung Lampu):</p>
+                    <div class="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-slate-700">
+                        <span class="px-2.5 py-1 bg-white rounded-lg border border-slate-200">[1] Mulai</span>
+                        <span>➔</span>
+                        <span class="px-2.5 py-1 bg-white rounded-lg border border-slate-200">[2] Tekan Sakelar</span>
+                        <span>➔</span>
+                        <span class="px-2.5 py-1 bg-white rounded-lg border border-slate-200">[3] Arus Mengalir</span>
+                        <span>➔</span>
+                        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-lg border border-emerald-300 font-bold">[4] Lampu Menyala</span>
+                    </div>
+                `;
+            }
+        }
+
+        /* ==================== QUIZ LOGIC ==================== */
+        function loadQuizQuestion() {
+            const qData = quizQuestions[currentQuestion - 1];
+            
+            // Update labels & progress
+            document.getElementById('quiz-progress-text').innerText = `Soal ${currentQuestion} dari 10`;
+            const percentVal = (currentQuestion / 10) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${percentVal}%`;
+            document.getElementById('quiz-percent-text').innerText = `${percentVal}%`;
+
+            // Set question text
+            document.getElementById('question-label').innerText = `${currentQuestion}. ${qData.text}`;
+
+            // Reset selection variables
+            selectedAnswer = null;
+            answerSelected = false;
+            isSubmitted = false;
+
+            // Render choice buttons
+            for (let i = 0; i < 4; i++) {
+                const choiceBtn = document.getElementById(`choice-btn-${i}`);
+                const choiceText = document.getElementById(`choice-text-${i}`);
+                const choiceDot = choiceBtn.querySelector('.choice-dot');
+
+                choiceText.innerText = qData.options[i];
+                choiceBtn.disabled = false;
+                choiceBtn.className = "w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]";
+                choiceDot.classList.add('hidden');
+            }
+
+            // Hide feedback
+            const feedbackArea = document.getElementById('feedback-area');
+            feedbackArea.className = "hidden p-4 sm:p-5 rounded-2xl border transition-all space-y-1.5";
+            document.getElementById('feedback-label').innerText = '';
+            document.getElementById('explanation-label').innerText = '';
+
+            // Reset buttons state
+            const btnJawab = document.getElementById('btn-jawab');
+            btnJawab.disabled = false;
+            btnJawab.className = "bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all text-sm flex items-center gap-2";
+
+            const btnNext = document.getElementById('btn-next');
+            btnNext.disabled = true;
+            btnNext.className = "bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition-all text-sm flex items-center gap-2";
+
+            if (currentQuestion === 10) {
+                btnNext.innerHTML = `Lihat Hasil <i class="fa-solid fa-trophy"></i>`;
+            } else {
+                btnNext.innerHTML = `Soal Berikutnya <i class="fa-solid fa-arrow-right"></i>`;
+            }
+        }
+
+        function selectQuizAnswer(index) {
+            if (isSubmitted) return; // Prevent changing after submission
+
+            selectedAnswer = index;
+
+            // Highlight chosen button
+            for (let i = 0; i < 4; i++) {
+                const choiceBtn = document.getElementById(`choice-btn-${i}`);
+                const choiceDot = choiceBtn.querySelector('.choice-dot');
+
+                if (i === index) {
+                    choiceBtn.className = "w-full text-left p-4 rounded-2xl border-2 border-indigo-600 bg-indigo-50/80 font-bold text-indigo-950 text-sm transition-all flex items-center justify-between shadow-sm";
+                    choiceDot.classList.remove('hidden');
+                } else {
+                    choiceBtn.className = "w-full text-left p-4 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm transition-all flex items-center justify-between group active:scale-[0.99]";
+                    choiceDot.classList.add('hidden');
+                }
+            }
+
+            // Clear any warning message if visible
+            const feedbackArea = document.getElementById('feedback-area');
+            if (feedbackArea.classList.contains('bg-amber-50')) {
+                feedbackArea.classList.add('hidden');
+            }
+        }
+
+        function submitQuizAnswer() {
+            const feedbackArea = document.getElementById('feedback-area');
+            const feedbackLabel = document.getElementById('feedback-label');
+            const explanationLabel = document.getElementById('explanation-label');
+
+            // 1. Validation: ensure option selected
+            if (selectedAnswer === null) {
+                feedbackArea.classList.remove('hidden');
+                feedbackArea.className = "p-4 rounded-2xl border border-amber-300 bg-amber-50 text-amber-900 text-xs sm:text-sm font-semibold flex items-center gap-2";
+                feedbackLabel.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-600 text-base"></i> Silakan pilih jawaban terlebih dahulu.`;
+                explanationLabel.innerText = '';
+                return;
+            }
+
+            // Prevent double submission
+            if (isSubmitted) return;
+            isSubmitted = true;
+            answerSelected = true;
+
+            const qData = quizQuestions[currentQuestion - 1];
+            const isCorrect = (selectedAnswer === qData.correct);
+
+            // Execute scoring
+            if (isCorrect) {
+                score += 10;
+                correctAnswers += 1;
+
+                feedbackArea.className = "p-4 sm:p-5 rounded-2xl border border-emerald-300 bg-emerald-50 text-emerald-950 text-sm space-y-1";
+                feedbackLabel.innerHTML = `<span class="text-emerald-700 font-black text-base flex items-center gap-1.5"><i class="fa-solid fa-circle-check"></i> ✓ Jawaban Benar!</span>`;
+                explanationLabel.innerText = qData.explanation;
+            } else {
+                incorrectAnswers += 1;
+
+                feedbackArea.className = "p-4 sm:p-5 rounded-2xl border border-rose-300 bg-rose-50 text-rose-950 text-sm space-y-1";
+                feedbackLabel.innerHTML = `<span class="text-rose-700 font-black text-base flex items-center gap-1.5"><i class="fa-solid fa-circle-xmark"></i> ✗ Jawaban Kurang Tepat</span>`;
+                explanationLabel.innerHTML = `Jawaban yang benar: <strong class="text-rose-900">${qData.options[qData.correct]}</strong>.<br><span class="text-xs text-slate-600">${qData.explanation}</span>`;
+            }
+
+            feedbackArea.classList.remove('hidden');
+
+            // Lock choice buttons & style correct/wrong choices
+            for (let i = 0; i < 4; i++) {
+                const choiceBtn = document.getElementById(`choice-btn-${i}`);
+                choiceBtn.disabled = true;
+                if (i === qData.correct) {
+                    choiceBtn.classList.add('border-emerald-500', 'bg-emerald-100/70', 'text-emerald-900');
+                } else if (i === selectedAnswer && !isCorrect) {
+                    choiceBtn.classList.add('border-rose-400', 'bg-rose-100/70', 'text-rose-900');
+                }
+            }
+
+            // Disable Jawab button
+            const btnJawab = document.getElementById('btn-jawab');
+            btnJawab.disabled = true;
+            btnJawab.className = "bg-slate-200 text-slate-400 cursor-not-allowed font-bold px-6 py-3 rounded-xl transition-all text-sm flex items-center gap-2";
+
+            // Enable Soal Berikutnya / Lihat Hasil
+            const btnNext = document.getElementById('btn-next');
+            btnNext.disabled = false;
+            btnNext.className = "bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold px-6 py-3 rounded-xl shadow-md transition-all text-sm flex items-center gap-2";
+        }
+
+        function nextQuizQuestion() {
+            if (!isSubmitted) return;
+
+            if (currentQuestion < 10) {
+                currentQuestion += 1;
+                loadQuizQuestion();
+            } else {
+                // If question 10 completed -> show final results
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            // Hide question components
+            document.getElementById('quiz-question-container').classList.add('hidden');
+
+            // Show result components ON THE SAME SCREEN
+            const resultContainer = document.getElementById('quiz-result-container');
+            resultContainer.classList.remove('hidden');
+
+            // Dynamic binding of quiz variables
+            document.getElementById('score-label').innerText = `Nilai: ${score}`;
+            document.getElementById('correct-answer-label').innerText = `Jawaban Benar: ${correctAnswers}`;
+            document.getElementById('incorrect-answer-label').innerText = `Jawaban Salah: ${incorrectAnswers}`;
+
+            // Calculate percentage dynamically
+            const percentage = Math.round((score / 100) * 100);
+            document.getElementById('percentage-label').innerText = `Persentase: ${percentage}%`;
+
+            // Dynamic Motivational Message based on exact score ranges
+            const messageLabel = document.getElementById('result-message-label');
+            if (score >= 80) {
+                messageLabel.innerText = "Hebat! Pemahamanmu sudah sangat baik.";
+                messageLabel.className = "text-sm font-bold text-emerald-800 mt-2 px-5 py-2.5 bg-emerald-50 border border-emerald-200 rounded-2xl inline-block max-w-md";
+            } else if (score >= 60) {
+                messageLabel.innerText = "Bagus! Terus tingkatkan pemahamanmu.";
+                messageLabel.className = "text-sm font-bold text-blue-800 mt-2 px-5 py-2.5 bg-blue-50 border border-blue-200 rounded-2xl inline-block max-w-md";
+            } else {
+                messageLabel.innerText = "Jangan menyerah. Pelajari kembali materinya dan coba lagi.";
+                messageLabel.className = "text-sm font-bold text-rose-800 mt-2 px-5 py-2.5 bg-rose-50 border border-rose-200 rounded-2xl inline-block max-w-md";
+            }
+
+            updateHomeStats();
+        }
+
+        function resetQuiz() {
+            // Full Reset of Required Quiz Variables
+            currentQuestion = 1;
+            score = 0;
+            correctAnswers = 0;
+            incorrectAnswers = 0;
+            selectedAnswer = null;
+            answerSelected = false;
+            isSubmitted = false;
+
+            // Hide result interface
+            document.getElementById('quiz-result-container').classList.add('hidden');
+
+            // Show question interface
+            document.getElementById('quiz-question-container').classList.remove('hidden');
+
+            // Reload Q1
+            loadQuizQuestion();
+        }
+
+        /* ==================== GAME LOGIKA LOGIC ==================== */
+        function loadGameChallenge() {
+            const ch = gameChallenges[currentChallenge - 1];
+            document.getElementById('game-challenge-num').innerText = `Tantangan ${currentChallenge} dari ${gameChallenges.length}`;
+            document.getElementById('game-challenge-title').innerText = `"${ch.title}"`;
+            document.getElementById('game-score-display').innerText = `Skor: ${gameScore}`;
+
+            // Create shuffled steps copy if empty
+            if (userSteps.length === 0) {
+                userSteps = [...ch.steps].sort(() => Math.random() - 0.5);
+            }
+
+            renderGameSteps();
+
+            // Reset Game UI states
+            document.getElementById('game-feedback').classList.add('hidden');
+            document.getElementById('btn-game-check').classList.remove('hidden');
+            document.getElementById('btn-game-next').classList.add('hidden');
+        }
+
+        function renderGameSteps() {
+            const container = document.getElementById('game-steps-container');
+            container.innerHTML = '';
+
+            userSteps.forEach((stepText, idx) => {
+                const item = document.createElement('div');
+                item.className = "p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between shadow-2xs hover:bg-indigo-50/40 transition-all";
+                item.innerHTML = `
+                    <div class="flex items-center space-x-3 pr-2">
+                        <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">${idx + 1}</span>
+                        <span class="text-xs sm:text-sm font-semibold text-slate-800">${stepText}</span>
+                    </div>
+                    <div class="flex items-center space-x-1 shrink-0">
+                        <button onclick="moveGameStep(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-xs active:scale-95 shadow-2xs">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+                        <button onclick="moveGameStep(${idx}, 1)" ${idx === userSteps.length - 1 ? 'disabled' : ''} class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center text-xs active:scale-95 shadow-2xs">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function moveGameStep(index, direction) {
+            const targetIdx = index + direction;
+            if (targetIdx < 0 || targetIdx >= userSteps.length) return;
+
+            // Swap steps
+            const temp = userSteps[index];
+            userSteps[index] = userSteps[targetIdx];
+            userSteps[targetIdx] = temp;
+
+            renderGameSteps();
+        }
+
+        function checkGameAnswer() {
+            const ch = gameChallenges[currentChallenge - 1];
+            let isCorrect = true;
+
+            for (let i = 0; i < ch.steps.length; i++) {
+                if (userSteps[i] !== ch.steps[i]) {
+                    isCorrect = false;
+                    break;
+                }
+            }
+
+            const feedback = document.getElementById('game-feedback');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                gameScore += 10;
+                document.getElementById('game-score-display').innerText = `Skor: ${gameScore}`;
+
+                feedback.className = "p-4 sm:p-5 rounded-2xl border border-emerald-300 bg-emerald-50 text-emerald-950 text-sm font-bold flex items-center gap-2";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i> ✓ Benar! Kamu berhasil menyusun algoritma secara terstruktur dan logis (+10 Poin).`;
+
+                document.getElementById('btn-game-check').classList.add('hidden');
+                document.getElementById('btn-game-next').classList.remove('hidden');
+            } else {
+                feedback.className = "p-4 sm:p-5 rounded-2xl border border-rose-300 bg-rose-50 text-rose-950 text-sm space-y-2";
+                let correctHTML = `<div class="font-bold flex items-center gap-2 text-rose-700"><i class="fa-solid fa-circle-xmark text-lg"></i> ✗ Belum tepat. Urutan algoritma yang benar adalah:</div><ol class="list-decimal list-inside text-xs text-slate-700 space-y-1 pl-2">`;
+                ch.steps.forEach(st => {
+                    correctHTML += `<li>${st}</li>`;
+                });
+                correctHTML += `</ol>`;
+                feedback.innerHTML = correctHTML;
+            }
+
+            updateHomeStats();
+        }
+
+        function nextGameChallenge() {
+            if (currentChallenge < gameChallenges.length) {
+                currentChallenge += 1;
+            } else {
+                currentChallenge = 1; // Cycle back
+            }
+            userSteps = [];
+            loadGameChallenge();
+        }
+
+        function resetGameChallenge() {
+            userSteps = [];
+            loadGameChallenge();
+        }
+
+        /* INITIAL LOAD EVENT */
+        window.onload = function () {
+            selectMaterial('Dekomposisi');
+            loadQuizQuestion();
+            loadGameChallenge();
+            updateHomeStats();
+        };
+    </script>
+</body>
+</html>
